@@ -1,0 +1,6 @@
+.playwright-mcp/
+*.log
+.DS_Store
+Thumbs.db
+worker/.wrangler/
+worker/node_modules/

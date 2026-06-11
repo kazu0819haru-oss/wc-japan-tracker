@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0e2a" />
+  <title>サムライブルー トラッカー</title>
+  <meta name="description" content="日本代表のW杯を追う。日程・結果・ライブスコア・観戦ガイドをまとめたPWA。" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./icons/icon-180.png" />
+  <link rel="icon" href="./icons/icon-192.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="侍ブルー" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="pitch-lines" aria-hidden="true"></div>
+
+  <header class="app-header">
+    <div class="app-header__mark" aria-hidden="true"></div>
+    <div class="app-header__title">
+      <span class="kicker">SAMURAI BLUE</span>
+      <h1>日本代表トラッカー</h1>
+    </div>
+    <button id="settingsBtn" class="icon-btn" aria-label="設定">⚙</button>
+  </header>
+
+  <main id="view" class="view" aria-live="polite">
+    <!-- 各ビューがここに描画される -->
+  </main>
+
+  <nav class="tabbar" role="tablist">
+    <button class="tab is-active" data-route="home" role="tab" aria-selected="true">
+      <span class="tab__icon">🏠</span><span class="tab__label">ホーム</span>
+    </button>
+    <button class="tab" data-route="schedule" role="tab" aria-selected="false">
+      <span class="tab__icon">📅</span><span class="tab__label">日程・結果</span>
+    </button>
+    <button class="tab" data-route="live" role="tab" aria-selected="false">
+      <span class="tab__icon tab__icon--live">●</span><span class="tab__label">ライブ</span>
+    </button>
+    <button class="tab" data-route="watch" role="tab" aria-selected="false">
+      <span class="tab__icon">📺</span><span class="tab__label">観戦</span>
+    </button>
+  </nav>
+
+  <!-- 設定ダイアログ -->
+  <dialog id="settingsDialog" class="dialog">
+    <form method="dialog" class="dialog__form" id="settingsForm">
+      <h2>設定</h2>
+      <label class="field">
+        <span>Cloudflare Workers のURL</span>
+        <input type="url" id="workerUrl" placeholder="https://xxx.workers.dev" />
+        <small>未設定の場合はデモデータで動作します。</small>
+      </label>
+      <div class="dialog__actions">
+        <button value="cancel" class="btn btn--ghost">閉じる</button>
+        <button value="save" class="btn btn--primary" id="saveSettings">保存</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
