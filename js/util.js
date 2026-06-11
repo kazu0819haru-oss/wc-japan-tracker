@@ -55,6 +55,41 @@ export function el(tag, attrs = {}, children = []) {
 
 export function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
 
+/* ---- チームエンブレム ----
+   crest が画像URLなら <img>、そうでなければ略称モノグラムの円形バッジ。
+   size: "lg"(ヒーロー) | "md"(リスト) | "sm" */
+const JP_NAMES = ["日本", "Japan", "JPN"];
+const isJapan = (name = "") => JP_NAMES.some((n) => name.includes(n));
+
+function monogram(name = "") {
+  const m = name.match(/[A-Za-z0-9]+/);          // ローマ字/数字部分を優先
+  if (m) return m[0].slice(0, 3).toUpperCase();
+  return name.slice(0, 2);                         // 日本語などは先頭2文字
+}
+
+// チーム名から安定した色相を作る（モノグラムの彩り）
+function hueOf(name = "") {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % 360;
+  return h;
+}
+
+export function crest(team = {}, size = "md") {
+  const src = team.crest || "";
+  if (/^https?:/.test(src)) {
+    return el("img", { class: `crest crest--${size} crest--img`, src, alt: team.name || "", loading: "lazy" });
+  }
+  const node = el("div", { class: `crest crest--${size} crest--mono` }, monogram(team.name));
+  if (isJapan(team.name)) {
+    node.classList.add("crest--jp");
+  } else {
+    const hue = hueOf(team.name || "");
+    node.style.setProperty("--c1", `hsl(${hue} 45% 32%)`);
+    node.style.setProperty("--c2", `hsl(${(hue + 30) % 360} 40% 20%)`);
+  }
+  return node;
+}
+
 export function loading(msg = "読み込み中…") {
   return el("div", { class: "loading" }, [el("div", { class: "spinner" }), msg]);
 }

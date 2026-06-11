@@ -1,12 +1,12 @@
 /* ホーム：次の試合カウントダウン / ライブ中バナー / 直近結果 */
 import { getMatches } from "../api.js";
-import { el, clear, loading, jst, breakdown, isLive, isDone, demoNote } from "../util.js";
+import { el, clear, loading, jst, breakdown, isLive, isDone, demoNote, crest } from "../util.js";
 
 let timer = null;
 
 function teamBlock(team) {
   return el("div", { class: "team" }, [
-    el("div", { class: "team__crest" }, team.crest || "⚽"),
+    crest(team, "lg"),
     el("div", { class: "team__name" }, team.name),
   ]);
 }
@@ -98,7 +98,7 @@ export async function render(root) {
       list.appendChild(
         el("div", { class: "match" }, [
           el("div", { class: "match__side" }, [
-            el("div", { class: "match__crest" }, m.homeTeam.crest || "⚽"),
+            crest(m.homeTeam, "md"),
             el("div", { class: "match__team" }, m.homeTeam.name),
           ]),
           el("div", { class: "match__center" }, [
@@ -106,7 +106,7 @@ export async function render(root) {
             el("div", { class: "match__meta" }, win ? "WIN" : lose ? "LOSE" : "DRAW"),
           ]),
           el("div", { class: "match__side match__side--away" }, [
-            el("div", { class: "match__crest" }, m.awayTeam.crest || "⚽"),
+            crest(m.awayTeam, "md"),
             el("div", { class: "match__team" }, m.awayTeam.name),
           ]),
         ])

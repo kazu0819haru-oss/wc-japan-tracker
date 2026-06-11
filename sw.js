@@ -1,6 +1,6 @@
 /* Service Worker — アプリシェルのオフラインキャッシュ
    APIレスポンスはキャッシュせず（store.js が担当）、静的資産のみ。 */
-const CACHE = "sbt-v1";
+const CACHE = "sbt-v2";
 const ASSETS = [
   "./",
   "./index.html",
